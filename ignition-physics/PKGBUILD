@@ -11,10 +11,17 @@ license=('Apache')
 depends=('ignition-cmake>2' 'ignition-math>6' 'ignition-plugin'
          'ignition-common>3' 'libdart' 'sdformat>9')
 makedepends=('cmake')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-physics/archive/gz-physics7_${pkgver}.tar.gz")
-sha256sums=('d352b68bec5d2e28cb20237d2cb68917e4acfe122e6df0dc059ed436d65fd270')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-physics/archive/gz-physics7_${pkgver}.tar.gz"
+        "645.patch::https://github.com/gazebosim/gz-physics/pull/645.patch")
+sha256sums=('d352b68bec5d2e28cb20237d2cb68917e4acfe122e6df0dc059ed436d65fd270'
+            '5c80c53c61fb8080123fd8a05c5652a138ca67b76d95ae5f2fd32f5b954fe32f')
 
 _dir="gz-physics-gz-physics7_${pkgver}"
+
+prepare() {
+  cd "$srcdir/$_dir"
+  patch -Np1 --verbose -i ../645.patch
+}
 
 build() {
   cd "$srcdir/$_dir"

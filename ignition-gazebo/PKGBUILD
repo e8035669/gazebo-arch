@@ -13,10 +13,17 @@ depends=('benchmark' 'gflags' 'tinyxml2' 'tinyxml' 'eigen' 'qt5-declarative'
          'ignition-tools>1' 'ignition-transport>8' 'ignition-gui' 'ignition-msgs>5'
          'sdformat' 'ignition-fuel_tools>4' 'ignition-sensors')
 makedepends=('cmake' 'ruby-ronn' 'doxygen')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-sim/archive/gz-sim8_${pkgver}.tar.gz")
-sha256sums=('c6298a9d03b9a6e5badd1a78a3b178201e9efac2209bbc2fe5a6b6bbba85125c')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/gazebosim/gz-sim/archive/gz-sim8_${pkgver}.tar.gz"
+        "2414.patch::https://github.com/gazebosim/gz-sim/pull/2414.patch")
+sha256sums=('c6298a9d03b9a6e5badd1a78a3b178201e9efac2209bbc2fe5a6b6bbba85125c'
+            '51bdba1957060de1312bfebe50f8701d1565b68ba6590ec5ba5b72ae04110641')
 
 _dir="gz-sim-gz-sim8_${pkgver}"
+
+prepare() {
+  cd "$srcdir/$_dir"
+  patch -Np1 --verbose -i ../2414.patch
+}
 
 build() {
   cd "$srcdir/$_dir"
